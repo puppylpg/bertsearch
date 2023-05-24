@@ -11,7 +11,7 @@ services:
       - bertserving
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
     ports:
       - "9200:9200"
     volumes:
@@ -19,6 +19,14 @@ services:
     tty: true
     environment:
       discovery.type: single-node
+      ES_JAVA_OPTS: -Xms2g -Xmx2g
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.12.0
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
 
   bertserving:
     build: ./bertserving

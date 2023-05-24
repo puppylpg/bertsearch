@@ -1,5 +1,11 @@
 ### https://raw.github.com/github/gitignore/72190ee30bd1e2ccc233222341435adacb7a6500/Python.gitignore
 
+documents.jsonl
+*.zip
+cased_*
+.idea
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -121,7 +127,8 @@ dmypy.json
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
