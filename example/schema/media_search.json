@@ -4,15 +4,15 @@
     "number_of_replicas": 1
   },
   "mappings": {
-    "dynamic": "true",
-    "_source": {
-      "enabled": "true"
-    },
+    "dynamic": "strict",
     "properties": {
       "title": {
         "type": "text"
       },
-      "text": {
+      "description": {
+        "type": "text"
+      },
+      "tags": {
         "type": "text"
       },
       "text_vector": {

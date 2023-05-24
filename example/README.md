@@ -1,0 +1,2 @@
+
+在笔记本上，向量化1w个media用了21min；index进elasticsearch大约1min。

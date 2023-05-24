@@ -3,7 +3,10 @@ from pprint import pprint
 
 from flask import Flask, render_template, jsonify, request
 from elasticsearch import Elasticsearch
-from bert_serving.client import BertClient
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-mpnet-base-v2')
+
 SEARCH_SIZE = 10
 INDEX_NAME = os.environ['INDEX_NAME']
 app = Flask(__name__)
@@ -16,11 +19,10 @@ def index():
 
 @app.route('/search')
 def analyzer():
-    bc = BertClient(ip='bertserving', output_fmt='list')
     client = Elasticsearch('elasticsearch:9200')
 
     query = request.args.get('q')
-    query_vector = bc.encode([query])[0]
+    query_vector = model.encode([query])[0].tolist()
 
     script_query = {
         "script_score": {
@@ -37,7 +39,7 @@ def analyzer():
         body={
             "size": SEARCH_SIZE,
             "query": script_query,
-            "_source": {"includes": ["title", "text"]}
+            "_source": {"includes": ["title", "description", "tags"]}
         }
     )
     print(query)
