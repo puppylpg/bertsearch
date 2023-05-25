@@ -33,6 +33,7 @@ def load_dataset(path):
 def bulk_predict(docs, batch_size=256):
     """Predict bert embeddings."""
     for i in range(0, len(docs), batch_size):
+        print(i)
         batch_docs = docs[i: i+batch_size]
         texts = []
         for doc in batch_docs:
@@ -45,7 +46,7 @@ def bulk_predict(docs, batch_size=256):
 
 def main(args):
     docs = load_dataset(args.data)
-    with open(args.save, 'w') as f:
+    with open(args.save, 'w', encoding='utf8') as f:
         for doc, emb in zip(docs, bulk_predict(docs)):
             d = create_document(doc, emb, args.index_name)
             f.write(json.dumps(d) + '\n')

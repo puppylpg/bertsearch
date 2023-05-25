@@ -3,7 +3,7 @@
 documents.jsonl
 *.zip
 cased_*
-example/data
+example/data/*
 .idea
 
 
