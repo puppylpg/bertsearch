@@ -17,8 +17,9 @@ services:
       - es-data8:/usr/share/elasticsearch/data
     tty: true
     environment:
-      discovery.type: single-node
-      ES_JAVA_OPTS: -Xms2g -Xmx2g
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.7.1

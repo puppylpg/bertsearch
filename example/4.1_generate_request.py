@@ -17,18 +17,14 @@ def main(args):
     query = args.query
     query_vector = model.encode([query])[0].tolist()
 
-    knn_query = {
+    body = {
+        "size": SEARCH_SIZE,
         "knn": {
             "field": "text_vector",
             "query_vector": query_vector,
             "k": SEARCH_SIZE,
             "num_candidates": 1000
-        }
-    }
-
-    body = {
-        "size": SEARCH_SIZE,
-        "query": knn_query,
+        },
         "_source": {"includes": ["title", "description", "tags"]}
     }
     print(json.dumps(body))
