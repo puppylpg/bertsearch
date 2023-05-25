@@ -30,7 +30,7 @@ def main(args):
     body = {
         "size": SEARCH_SIZE,
         "query": script_query,
-        "_source": {"includes": ["title", "description", "tags"]}
+        "_source": {"includes": ["all"]}
     }
     print(json.dumps(body))
 

@@ -25,7 +25,7 @@ def main(args):
             "k": SEARCH_SIZE,
             "num_candidates": 1000
         },
-        "_source": {"includes": ["title", "description", "tags"]}
+        "_source": {"includes": ["all"]}
     }
     print(json.dumps(body))
 
