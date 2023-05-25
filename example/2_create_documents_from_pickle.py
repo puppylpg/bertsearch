@@ -19,6 +19,7 @@ def create_document(doc, emb, index_name):
         'title': doc['_source'].get('title', ''),
         'description': doc['_source'].get('description', ''),
         'tags': doc['_source'].get('tags', ''),
+        'all': '\n'.join([doc['_source'].get('title', ''), doc['_source'].get('description', ''), doc['_source'].get('tags', '')]),
         'text_vector': emb
     }
 

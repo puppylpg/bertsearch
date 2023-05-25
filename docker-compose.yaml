@@ -1,27 +1,27 @@
 version: '3.7'
 services:
-  web:
-    build: ./web
-    ports:
-      - "5000:5000"
-    environment:
-      - INDEX_NAME
-    depends_on:
-      - elasticsearch
+#  web:
+#    build: ./web
+#    ports:
+#      - "5000:5000"
+#    environment:
+#      - INDEX_NAME
+#    depends_on:
+#      - elasticsearch
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.1
     ports:
       - "9200:9200"
     volumes:
-      - es-data:/usr/share/elasticsearch/data
+      - es-data8:/usr/share/elasticsearch/data
     tty: true
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: -Xms2g -Xmx2g
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.12.0
+    image: docker.elastic.co/kibana/kibana:8.7.1
     ports:
       - "5601:5601"
     environment:
@@ -30,5 +30,5 @@ services:
       - elasticsearch
 
 volumes:
-  es-data:
+  es-data8:
     driver: local

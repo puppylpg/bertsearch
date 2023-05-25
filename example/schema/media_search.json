@@ -15,9 +15,14 @@
       "tags": {
         "type": "text"
       },
+      "all": {
+        "type": "text"
+      },
       "text_vector": {
         "type": "dense_vector",
-        "dims": 768
+        "dims": 768,
+        "index": true,
+        "similarity": "cosine"
       }
     }
   }
