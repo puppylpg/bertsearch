@@ -29,8 +29,6 @@ def main(args):
         data.append(hit)
         if i % 10000 == 0:
             print(i)
-            # TODO
-            # break
 
     with open(args.save, 'wb') as f:
         pickle.dump(data, f)
