@@ -37,7 +37,8 @@ def knn():
 
     response = client.search(
         index=INDEX_NAME,
-        body=body
+        body=body,
+        request_timeout=1000
     )
     pprint(query)
     # pprint(response)
