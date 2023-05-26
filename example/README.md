@@ -1,6 +1,6 @@
 
 - 从es获取大约60w个media需要3min；
-- 在笔记本上，向量化1w个media用了21min，60w个预计20h+；zj068上8h；
+- 在笔记本上，向量化1w个media用了21min，60w个预计20h+；zj068上8h；th140上5.5h;
 - index进elasticsearch大约1min。
 
 注意事项：

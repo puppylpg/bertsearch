@@ -34,17 +34,32 @@
       </v-app-bar>
       <v-content>
         <v-row class="ml-0">
-          <v-col cols="12" md="6" offset-md="1" offset-lg="1" offset-xl="1">
+          <v-col>
             <template v-if="'hits' in result">
               <v-card max-width="700" flat v-for="(item, index) in result.hits.hits" :key="index">
                 <v-card-title>[[ item._source.title ]]</v-card-title>
                 <v-card-text>[[ item._source.all ]]</v-card-text>
                 <v-card-actions>
-                  <v-chip class="primary">[[ item._score ]]</v-chip>
+                  <v-chip class="info">Top[[ index + 1 ]]</v-chip>
+                  <v-chip class="success">[[ item._score ]]</v-chip>
+                  <v-chip class="grey">id: [[ item._id ]], routing: [[ item._routing ]]</v-chip>
                 </v-card-actions>
               </v-card>
             </template>
           </v-col>
+            <v-col>
+              <template v-if="'hits' in result2">
+                  <v-card max-width="700" flat v-for="(item, index) in result2.hits.hits" :key="index">
+                    <v-card-title>[[ item._source.title ]]</v-card-title>
+                    <v-card-text>[[ item._source.all ]]</v-card-text>
+                    <v-card-actions>
+                        <v-chip class="info">Top[[ index + 1 ]]</v-chip>
+                        <v-chip class="success">[[ item._score ]]</v-chip>
+                        <v-chip class="grey">id: [[ item._id ]], routing: [[ item._routing ]]</v-chip>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-col>
         </v-row>
       </v-content>
     </v-app>
@@ -63,21 +78,27 @@
       delimiters: ['[[', ']]'],
       data: {
         query: '',
-        result: []
+        result: [],
+          result2: []
       },
       created() {
-        this.query = 'happy new year'
+        this.query = "but happiness belongs to others, i don't feel good in this new year's day"
         this.search()
       },
       methods: {
         search() {
-          axios.get(`${base_url}search?q=${this.query}`).then(response => {
+          axios.get(`${base_url}knn?q=${this.query}`).then(response => {
             this.result = response.data;
           })
+
+            axios.get(`${base_url}search?q=${this.query}`).then(response => {
+                this.result2 = response.data;
+            })
         },
         submit() {
           if (this.query == '') {
             this.result = [];
+            this.result2 = [];
             return;
           }
           this.search()

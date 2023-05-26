@@ -17,8 +17,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/search')
-def analyzer():
+@app.route('/knn')
+def knn():
     client = Elasticsearch('elasticsearch:9200')
 
     query = request.args.get('q')
@@ -39,7 +39,32 @@ def analyzer():
         index=INDEX_NAME,
         body=body
     )
-    print(query)
+    pprint(query)
+    # pprint(response)
+    return jsonify(response)
+
+
+@app.route('/search')
+def search():
+    client = Elasticsearch('elasticsearch:9200')
+
+    query = request.args.get('q')
+
+    match_query = {
+        "match": {
+            "all": query
+        }
+    }
+
+    response = client.search(
+        index=INDEX_NAME,
+        body={
+            "size": SEARCH_SIZE,
+            "query": match_query,
+            "_source": {"includes": ["title", "all"]}
+        }
+    )
+    pprint(query)
     # pprint(response)
     return jsonify(response)
 
