@@ -42,7 +42,8 @@
                 <v-card-actions>
                   <v-chip class="info">Top[[ index + 1 ]]</v-chip>
                   <v-chip class="success">[[ item._score ]]</v-chip>
-                  <v-chip class="grey">id: [[ item._id ]], routing: [[ item._routing ]]</v-chip>
+                  <v-chip class="grey">[[ item._source.url ]]</v-chip>
+<!--?                  <v-chip class="grey">id: [[ item._id ]], routing: [[ item._routing ]]</v-chip>-->
                 </v-card-actions>
               </v-card>
             </template>
@@ -55,7 +56,8 @@
                     <v-card-actions>
                         <v-chip class="info">Top[[ index + 1 ]]</v-chip>
                         <v-chip class="success">[[ item._score ]]</v-chip>
-                        <v-chip class="grey">id: [[ item._id ]], routing: [[ item._routing ]]</v-chip>
+                        <v-chip class="grey">[[ item._source.url ]]</v-chip>
+<!--?                        <v-chip class="grey">id: [[ item._id ]], routing: [[ item._routing ]]</v-chip>-->
                     </v-card-actions>
                   </v-card>
                 </template>

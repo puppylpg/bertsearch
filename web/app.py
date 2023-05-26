@@ -32,7 +32,7 @@ def knn():
             "k": SEARCH_SIZE,
             "num_candidates": SEARCH_SIZE + 100
         },
-        "_source": {"includes": ["all", "title"]}
+        "_source": {"includes": ["all", "title", "url"]}
     }
 
     response = client.search(
@@ -62,7 +62,7 @@ def search():
         body={
             "size": SEARCH_SIZE,
             "query": match_query,
-            "_source": {"includes": ["title", "all"]}
+            "_source": {"includes": ["all", "title", "url"]}
         }
     )
     pprint(query)
