@@ -58,7 +58,7 @@ def bulk_predict(docs, batch_size=256):
             texts.append(text)
         embeddings = model.encode(texts)
         for emb in embeddings:
-            yield normalize_vector(emb.tolist())
+            yield normalize_vector(emb).tolist()
 
 
 def main(args):
