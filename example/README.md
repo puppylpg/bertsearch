@@ -18,6 +18,8 @@
 在工程根目录下：需要ticket申请docker权限（`docker version`是否报错），使用`pip install docker-compose`安装docker-compose。
 1. `docker-compose up`，服务陆续启动，web会挂掉，因为milvus里没有索引media_search，不重要；
 
+`docker-compose.yaml`里es的heap设置的2G，太小了，可以考虑改成8G，甚至更大。
+
 # 数据摄入
 在工程根目录下：
 1. 创建es索引：`python example/0_create_index.py`

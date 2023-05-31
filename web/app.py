@@ -35,7 +35,7 @@ client = Elasticsearch('elasticsearch:9200')
 @app.route('/knn')
 def knn():
     query = request.args.get('q')
-    query_vector = model.encode([query])[0].tolist()
+    query_vector = normalize_vector(model.encode([query])[0].tolist())
 
     body = {
         "size": SEARCH_SIZE,
