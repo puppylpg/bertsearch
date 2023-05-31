@@ -5,10 +5,16 @@ import argparse
 import json
 import pickle
 import numpy as np
+import os
+import torch
 
 from sentence_transformers import SentenceTransformer
 
 model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-mpnet-base-v2')
+# 设置CUDA_VISIBLE_DEVICES环境变量
+os.environ['CUDA_VISIBLE_DEVICES'] = '2,3'
+print(f'gpu available? #{torch.cuda.is_available()}')
+print(f'gpu count? #{torch.cuda.device_count()}')
 
 
 def normalize_vector(v):
