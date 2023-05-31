@@ -9,7 +9,7 @@ from elasticsearch.helpers import bulk
 
 
 def main(args):
-    client = Elasticsearch()
+    client = Elasticsearch('http://localhost:9200')
     with open(args.data, 'r') as f:
         # 初始化计数器和数据列表
         count = 0
