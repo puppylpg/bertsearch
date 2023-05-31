@@ -13,7 +13,7 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-mpnet-base-v2')
 
 SEARCH_SIZE = 100
-INDEX_NAME = os.environ['INDEX_NAME']
+INDEX_NAME = os.getenv('INDEX_NAME', 'media_search')
 app = Flask(__name__)
 
 
