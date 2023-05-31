@@ -1,7 +1,11 @@
 
 - mkdir example/data
 - 从es获取大约60w个media需要3min【这里必须使用elasticsearch==7.12.0，不能使用8】；
-- 在笔记本上，向量化1w个media用了21min，60w个预计20h+；zj068上8h；th140上5.5h;
+- 向量编码： 
+  - 在笔记本上，向量化1w个media用了21min，60w个预计20h+；
+  - zj068上8h；
+  - th140上5.5h;
+  - gpu246上一张卡编码60w大约20min；
 - index进elasticsearch大约1min。
 
 注意事项：
