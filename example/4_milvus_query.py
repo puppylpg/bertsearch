@@ -41,13 +41,31 @@ def main(args):
         anns_field="text_vector",
         param=search_params,
         limit=SEARCH_SIZE,
-        output_fields=['all']
+        output_fields=['all', 'url']
     )
 
+    result_json = []
     for hits in result:
         for hit in hits:
-            print(f"_id: {hit.id}")
-            print(f"hit: {hit}, field: {hit.entity.get('all')}")
+            result_json.append({
+                '_id': hit.id,
+                '_score': hit.score,
+                '_source': {
+                    'all': hit.entity.get('all'),
+                    'url': hit.entity.get('url')
+                }
+            })
+        # 只考虑第一个向量的查询结果
+        break
+
+    print(result_json)
+    # for hits in result:
+    #     print(f"_ids: {hits.ids}")
+    #     print(f"_scores: {hits.distances}")
+        # for hit in hits:
+            # print(f"_id: {hit.id}")
+            # print(f"_score: {hit.score}")
+            # print(f"hit: {hit}, field: {hit.entity.get('all')}")
 
 
 if __name__ == '__main__':

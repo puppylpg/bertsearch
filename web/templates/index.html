@@ -62,6 +62,20 @@
                   </v-card>
                 </template>
               </v-col>
+<v-col>
+              <template v-if="'hits' in result_milvus">
+                  <v-card max-width="700" flat v-for="(item, index) in result_milvus" :key="index">
+                    <v-card-title>[[ item._source.title ]]</v-card-title>
+                    <v-card-text>[[ item._source.all ]]</v-card-text>
+                    <v-card-actions>
+                        <v-chip class="info">Top[[ index + 1 ]]</v-chip>
+                        <v-chip class="success">[[ item._score ]]</v-chip>
+                        <v-chip class="grey">[[ item._source.url ]]</v-chip>
+<!--?                        <v-chip class="grey">id: [[ item._id ]], routing: [[ item._routing ]]</v-chip>-->
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-col>
         </v-row>
       </v-content>
     </v-app>
@@ -81,7 +95,8 @@
       data: {
         query: '',
         result: [],
-          result2: []
+          result2: [],
+          result_milvus: []
       },
       created() {
         this.query = "but happiness belongs to others, i don't feel good in this new year's day"
@@ -96,11 +111,16 @@
             axios.get(`${base_url}search?q=${this.query}`).then(response => {
                 this.result2 = response.data;
             })
+
+            axios.get(`${base_url}milvus?q=${this.query}`).then(response => {
+                this.result_milvus = response.data;
+            })
         },
         submit() {
           if (this.query == '') {
             this.result = [];
             this.result2 = [];
+            this.result_milvus = [];
             return;
           }
           this.search()
