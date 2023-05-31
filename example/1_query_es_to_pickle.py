@@ -16,7 +16,7 @@ def main(args):
             "range": {
                 "timestamp": {
                     "gte": "2023-01-01",
-                    "lt": "2023-01-02",
+                    "lt": "2023-01-11",
                     "format": "yyyy-MM-dd",
                     "time_zone": "+08:00"
                 }

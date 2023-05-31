@@ -4,10 +4,18 @@ Example script to create elasticsearch documents.
 import argparse
 import json
 import pickle
+import numpy as np
 
 from sentence_transformers import SentenceTransformer
 
 model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-mpnet-base-v2')
+
+
+def normalize_vector(v):
+    norm = np.linalg.norm(v)
+    if norm == 0:
+        return v
+    return v / norm
 
 
 def create_document(doc, emb, index_name):
@@ -44,7 +52,7 @@ def bulk_predict(docs, batch_size=256):
             texts.append(text)
         embeddings = model.encode(texts)
         for emb in embeddings:
-            yield emb.tolist()
+            yield normalize_vector(emb.tolist())
 
 
 def main(args):

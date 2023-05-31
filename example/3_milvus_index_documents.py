@@ -15,13 +15,6 @@ from pymilvus import (
 collection_name = "media_search"
 
 
-def normalize_vector(v):
-    norm = np.linalg.norm(v)
-    if norm == 0:
-        return v
-    return v / norm
-
-
 def bulk(collection, docs):
     entities = [
         [doc['_id'] for doc in docs],
@@ -32,7 +25,7 @@ def bulk(collection, docs):
         [doc.get('url', '') for doc in docs],
         [doc.get('platform', '') for doc in docs],
         # 单位向量
-        [normalize_vector(doc.get('text_vector', '')) for doc in docs]
+        [doc.get('text_vector', '') for doc in docs]
     ]
     result = collection.insert(entities)
     return result
