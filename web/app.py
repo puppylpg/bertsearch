@@ -29,10 +29,11 @@ def index():
     return render_template('index.html')
 
 
+client = Elasticsearch('elasticsearch:9200')
+
+
 @app.route('/knn')
 def knn():
-    client = Elasticsearch('elasticsearch:9200')
-
     query = request.args.get('q')
     query_vector = model.encode([query])[0].tolist()
 
@@ -59,8 +60,6 @@ def knn():
 
 @app.route('/search')
 def search():
-    client = Elasticsearch('elasticsearch:9200')
-
     query = request.args.get('q')
 
     match_query = {
@@ -82,12 +81,14 @@ def search():
     return jsonify(response)
 
 
-@app.route('/milvus')
-def knn():
-    connections.connect("default", host="localhost", port="19530")
-    collection_name = "media_search"
-    collection = Collection(collection_name)
+connections.connect("default", host="milvus-standalone", port="19530")
+collection_name = "media_search"
+collection = Collection(collection_name)
+collection.load()
 
+
+@app.route('/milvus')
+def milvus():
     query = request.args.get('q')
     query_vector = normalize_vector(model.encode([query])[0].tolist())
 
@@ -101,25 +102,27 @@ def knn():
         anns_field="text_vector",
         param=search_params,
         limit=SEARCH_SIZE,
-        output_fields=['all', 'url']
+        output_fields=['all', 'title', 'url']
     )
 
-    result_json = []
+    result_dict = {}
     for hits in result:
+        result_dict['hits'] = {}
         for hit in hits:
-            result_json.append({
+            if 'hits' not in result_dict['hits']:
+                result_dict['hits']['hits'] = []
+            result_dict['hits']['hits'].append({
                 '_id': hit.id,
                 '_score': hit.score,
                 '_source': {
                     'all': hit.entity.get('all'),
+                    'title': hit.entity.get('title'),
                     'url': hit.entity.get('url')
                 }
             })
-        # 只考虑第一个向量的查询结果
-        break
 
     # pprint(response)
-    return result_json
+    return result_dict
 
 
 if __name__ == '__main__':

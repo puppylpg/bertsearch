@@ -14,7 +14,7 @@ SEARCH_SIZE = 10
 connections.connect("default", host="localhost", port="19530")
 collection_name = "media_search"
 collection = Collection(collection_name)
-# collection.load()
+collection.load()
 
 
 def normalize_vector(v):
@@ -28,6 +28,7 @@ def main(args):
     query = args.query
     v = model.encode([query])
     query_vector = normalize_vector(v[0].tolist())
+    print(query_vector)
 
     # print(f'query_vector shape: {query_vector.shape}')
 
@@ -44,10 +45,13 @@ def main(args):
         output_fields=['all', 'url']
     )
 
-    result_json = []
+    result_dict = {}
     for hits in result:
+        result_dict['hits'] = {}
         for hit in hits:
-            result_json.append({
+            if 'hits' not in result_dict['hits']:
+                result_dict['hits']['hits'] = []
+            result_dict['hits']['hits'].append({
                 '_id': hit.id,
                 '_score': hit.score,
                 '_source': {
@@ -55,10 +59,8 @@ def main(args):
                     'url': hit.entity.get('url')
                 }
             })
-        # 只考虑第一个向量的查询结果
-        break
 
-    print(result_json)
+    print(result_dict)
     # for hits in result:
     #     print(f"_ids: {hits.ids}")
     #     print(f"_scores: {hits.distances}")

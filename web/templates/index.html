@@ -64,7 +64,7 @@
               </v-col>
 <v-col>
               <template v-if="'hits' in result_milvus">
-                  <v-card max-width="700" flat v-for="(item, index) in result_milvus" :key="index">
+                  <v-card max-width="700" flat v-for="(item, index) in result_milvus.hits.hits" :key="index">
                     <v-card-title>[[ item._source.title ]]</v-card-title>
                     <v-card-text>[[ item._source.all ]]</v-card-text>
                     <v-card-actions>
