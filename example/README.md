@@ -26,6 +26,8 @@
 2. es数据摄入：`python example/3_index_documents.py`
 3. milvus索引创建、数据摄入：`python example/3_milvus_index_documents.py`
 
+注意：实际使用时发现在gpu246上使用docker-compose启动的上述服务，有时候无法在gpu246上访问服务，但是可以在其他任意机器上使用`gpu246:<port>`访问相应服务（很迷……）。如果遇到上述问题，可以在其他机器（比如th077）上执行上述索引创建、数据摄入的任务。执行前记得把python程序里elasticsearch/milvus client所连接的地址设置为`gpu246:<port>`。
+
 # 重启服务
 在工程根目录下：
 1. `docker-compose down`
